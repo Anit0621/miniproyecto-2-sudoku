@@ -99,28 +99,97 @@ public class Board implements IBoard {
     }
 
     /**
-     * Checks whether placing a candidate number at cell (row, col) violates the row or column uniqueness.
+     * Checks whether placing a candidate number at cell (row, col) violates the row, column or block uniqueness.
      *
-     * @param row       the row index.
-     * @param col       the column index.
-     * @param candidate the number to place (from 1 to 6).
-     * @return true if the candidate can be placed without conflict; false otherwise.
+     * @param row the row index
+     * @param col the column index
+     * @param candidate the number to place (from 1 to 6)
+     * @return true if the candidate can be placed without conflict; false otherwise
      */
     @Override
     public boolean isValid(int row, int col, int candidate) {
-        // Check the current row for an existing occurrence of the candidate.
+        // Check the current row for an existing occurrence of the candidate
         for (int j = 0; j < SIZE; j++) {
-            if (board.get(row).get(j) == candidate) {
+            if (j != col && board.get(row).get(j) == candidate) {
                 return false;
             }
         }
-        // Check the current column for an existing occurrence of the candidate.
+
+        // Check the current column for an existing occurrence of the candidate
         for (int i = 0; i < SIZE; i++) {
-            if (board.get(i).get(col) == candidate) {
+            if (i != row && board.get(i).get(col) == candidate) {
                 return false;
+            }
+        }
+
+        // Check the 2x3 block for an existing occurrence of the candidate
+        return isBlockValid(row, col, candidate);
+    }
+
+    /**
+     * Checks if a number is valid in the specified 2x3 block.
+     *
+     * @param row the row index of the cell
+     * @param col the column index of the cell
+     * @param candidate the number to validate
+     * @return true if the number is not already in the block, false otherwise
+     */
+    private boolean isBlockValid(int row, int col, int candidate) {
+        int blockStartRow = (row / BLOCK_ROWS) * BLOCK_ROWS;
+        int blockStartCol = (col / BLOCK_COLS) * BLOCK_COLS;
+
+        for (int i = blockStartRow; i < blockStartRow + BLOCK_ROWS; i++) {
+            for (int j = blockStartCol; j < blockStartCol + BLOCK_COLS; j++) {
+                if (i == row && j == col) {
+                    continue;
+                }
+                if (board.get(i).get(j) == candidate) {
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+    /**
+     * Sets the value of a specific cell in the board.
+     *
+     * @param row the row index (0-5)
+     * @param col the column index (0-5)
+     * @param value the value to set (0-6, where 0 means empty)
+     */
+    public void setCellValue(int row, int col, int value) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE) {
+            board.get(row).set(col, value);
+        }
+    }
+
+    /**
+     * Gets the value of a specific cell in the board.
+     *
+     * @param row the row index (0-5)
+     * @param col the column index (0-5)
+     * @return the value at the specified position
+     */
+    public int getCellValue(int row, int col) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE) {
+            return board.get(row).get(col);
+        }
+        return -1;
+    }
+
+    /**
+     * Checks if a cell is editable (initially empty).
+     *
+     * @param row the row index (0-5)
+     * @param col the column index (0-5)
+     * @return true if the cell is editable, false otherwise
+     */
+    public boolean isCellEditable(int row, int col) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE) {
+            return board.get(row).get(col) == 0;
+        }
+        return false;
     }
 
     /**
