@@ -200,4 +200,8 @@ public class Board implements IBoard {
     public List<List<Integer>> getBoard() {
         return board;
     }
+
+    public int getSize(){
+        return SIZE;
+    }
 }

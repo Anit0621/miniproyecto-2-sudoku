@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+
 /**
  * Represents the concrete implementation of the Sudoku game logic.
  * This class is responsible for setting up the game board UI and handling user input.
@@ -31,6 +33,17 @@ public class Game extends GameAbstract {
         this.controller = controller;
     }
 
+    public Board getBoard(){
+        return board;
+    }
+
+    public ArrayList<TextField> getNumberFields(){
+        return numberFields;
+
+    }
+
+
+
     /**
      * Starts the game by generating a board and creating UI components.
      */
@@ -46,6 +59,7 @@ public class Game extends GameAbstract {
                 if (number != 0) {
                     textField.setText(String.valueOf(number));
                     textField.setEditable(false);
+                    textField.setStyle("-fx-background-color: #d3d3d3;");
                 } else {
                     textField.setText("");
                     textField.setEditable(true);
@@ -53,6 +67,7 @@ public class Game extends GameAbstract {
 
                 handleNumberField(textField, i, j);
                 boardGridpane.add(textField, j, i);
+                numberFields.add(textField);
             }
         }
     }
