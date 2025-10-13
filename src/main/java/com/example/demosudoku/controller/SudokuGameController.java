@@ -3,17 +3,20 @@ package com.example.demosudoku.controller;
 import com.example.demosudoku.model.game.Game;
 import com.example.demosudoku.model.user.User;
 import com.example.demosudoku.utils.AlertBox;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
+import java.util.*;
+
 import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Controller for the main Sudoku game view (sudoku-game-view.fxml).
@@ -26,6 +29,10 @@ public class SudokuGameController implements Initializable {
 
     @FXML
     private TextArea messagesTextArea;
+
+    @FXML
+    private Button helpButton;
+
 
     private Game game;
     private User user;
@@ -82,24 +89,35 @@ public class SudokuGameController implements Initializable {
      */
     private void setupTextFieldFilter(TextField textField) {
         textField.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!textField.isEditable()){
+                event.consume();
+                return;
+            }
             String input = event.getCharacter();
 
-            if (!input.matches("[1-6]")) {
-                event.consume();
-                alertBox.showAlert("Entrada inválida", "Solo se permiten números del 1 al 6", Alert.AlertType.WARNING);
+            if (input.charAt(0) == 8 || input.charAt(0) == 127) {
                 return;
             }
+                if (!input.matches("[1-6]")) {
+                    event.consume();
+                    alertBox.showAlert("Entrada inválida", "Solo se permiten números del 1 al 6", Alert.AlertType.WARNING);
+                    return;
+                }
 
-            if (textField.getText().length() >= 1) {
-                event.consume();
-                alertBox.showAlert("Entrada inválida", "Solo se permite un dígito por celda", Alert.AlertType.WARNING);
-                return;
-            }
+                if (textField.getText().length() >= 1) {
+                    event.consume();
+                    alertBox.showAlert("Entrada inválida", "Solo se permite un dígito por celda", Alert.AlertType.WARNING);
+                    return;
+                }
         });
 
         textField.setOnKeyPressed(event -> {
+            if (!textField.isEditable()){
+                event.consume();
+                return;
+            }
             if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
-                textField.setText("");
+                textField.clear();
                 event.consume();
             }
         });
@@ -151,6 +169,57 @@ public class SudokuGameController implements Initializable {
         this.user = user;
         if (user != null) {
             addMessage("Jugador: " + user.getNickname());
+        }
+    }
+
+    @FXML
+    private void handleHelp(ActionEvent event) {
+
+        for (int i = 0; i < game.getBoard().getSize(); i++) {
+            for (int j = 0; j < game.getBoard().getSize(); j++) {
+                int index = i * game.getBoard().getSize() + j;
+                TextField cell = game.getNumberFields().get(index);
+                cell.setPromptText("");
+            }
+
+        }
+
+        List<Integer> numbers = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 1; i <= game.getBoard().getSize(); i++) {
+            numbers.add(i);
+
+        }
+        Collections.shuffle(numbers, random);
+        Random random2 = new Random();
+        Random random3 = new Random();
+        while(true){
+            int randomIndex = random2.nextInt(game.getBoard().getSize());
+            int randomIndex2 = random3.nextInt(game.getBoard().getSize());
+            int index = randomIndex * game.getBoard().getSize() + randomIndex2;
+
+            TextField cell = game.getNumberFields().get(index);
+
+            if (cell.getText().isEmpty()){
+
+                boolean found = false;
+                for (Integer number : numbers) {
+                    if (game.getBoard().isValid(randomIndex, randomIndex2, number)) {
+                        cell.setPromptText(String.valueOf(number));
+
+                        return;
+                    }
+                }
+                if (!found) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Sin opciones válidas");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No se encontró ningún número válido para esta celda.");
+                    alert.showAndWait();
+                    return;
+                }
+
+            }
         }
     }
 }
