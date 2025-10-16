@@ -9,12 +9,12 @@ It applies object-oriented programming, event handling, and the MVC architecture
 
 FEATURES
 
--Random 6x6 Sudoku board generation
--Row, column, and region validation
--Keyboard and mouse event handling
--Editable and fixed cell differentiation
--Alert and information messages
--Layer separation (Model, View, Controller)
+- Random 6x6 Sudoku board generation
+- Row, column, and region validation
+- Keyboard and mouse event handling
+- Editable and fixed cell differentiation
+- Alert and information messages
+- Layer separation (Model, View, Controller)
 
 
 
@@ -29,20 +29,20 @@ controller/
 - SudokuWelcomeController.java
 
 model/
--Board.java
--Game.java
--User.java
--IBoard.java
--IGame.java
+- Board.java
+- Game.java
+- User.java
+- IBoard.java
+- IGame.java
 
 view/
--SudokuGameStage.java
--SudokuWelcomeStage.java
--AlertBox.java
+- SudokuGameStage.java
+- SudokuWelcomeStage.java
+- AlertBox.java
 
 resources/
--sudoku-game-view.fxml
--sudoku-welcome-view.fxml
+- sudoku-game-view.fxml
+- sudoku-welcome-view.fxml
 
 
 
@@ -53,9 +53,9 @@ resources/
 
 HOW TO RUN
 
--Clone the repository
--Open the project in an IDE with JavaFX support (such as IntelliJ or NetBeans)
--Run the class MainApplication.java
+- Clone the repository
+- Open the project in an IDE with JavaFX support (such as IntelliJ or NetBeans)
+- Run the class MainApplication.java
 
 
 
