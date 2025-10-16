@@ -173,7 +173,7 @@ public class SudokuGameController implements Initializable {
     }
 
     @FXML
-    private void handleHelp(ActionEvent event) {
+    public void handleHelp(ActionEvent event) {
 
         for (int i = 0; i < game.getBoard().getSize(); i++) {
             for (int j = 0; j < game.getBoard().getSize(); j++) {
@@ -221,5 +221,8 @@ public class SudokuGameController implements Initializable {
 
             }
         }
+    }
+    public void showVictoryAlert(){
+        new AlertBox().showAlert("¡Felicidades!","¡Has completado el Sudoku!",Alert.AlertType.INFORMATION);
     }
 }

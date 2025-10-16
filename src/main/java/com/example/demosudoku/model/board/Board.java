@@ -151,6 +151,17 @@ public class Board implements IBoard {
         return true;
     }
 
+    public boolean isComplete(){
+        for (int i = 0; i < SIZE; i++){
+            for (int j = 0; j < SIZE; j++){
+                if(getCellValue(i,j)==0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Sets the value of a specific cell in the board.
      *
