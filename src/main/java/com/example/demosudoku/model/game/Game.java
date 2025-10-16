@@ -33,9 +33,19 @@ public class Game extends GameAbstract {
         this.controller = controller;
     }
 
+    /**
+     * Returns the Board instance associated with this game
+     * @return the current board of the game
+     */
+
     public Board getBoard(){
         return board;
     }
+
+    /**
+     * Returns the list of TextField elements that represent the cells of the board.
+     * @return an ArrayList containing he board's number fields
+     */
 
     public ArrayList<TextField> getNumberFields(){
         return numberFields;

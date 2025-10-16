@@ -151,6 +151,11 @@ public class Board implements IBoard {
         return true;
     }
 
+    /**
+     * Checks whether every cell in the board is filled with a number
+     * @return false if at least one cell is empty, true if every cell is filled.
+     */
+
     public boolean isComplete(){
         for (int i = 0; i < SIZE; i++){
             for (int j = 0; j < SIZE; j++){

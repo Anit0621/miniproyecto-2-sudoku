@@ -33,9 +33,22 @@ public class SudokuGameController implements Initializable {
     @FXML
     private Button helpButton;
 
+    /**
+     * The current Sudoku game instance that manages the board and gameplay logic.
+     */
 
     private Game game;
+
+    /**
+     * The current user playing the Sudoku game.
+     */
+
     private User user;
+
+    /**
+     * Utility object used to display alert messages to the user.
+     */
+
     private AlertBox alertBox;
 
     /**
@@ -171,6 +184,12 @@ public class SudokuGameController implements Initializable {
             addMessage("Jugador: " + user.getNickname());
         }
     }
+
+    /**
+     * Defines the method used for the help button. Selects a random empty cell on the Sudoku board and displays a possible
+     * valid number as hint using the cell's promp text.
+     * @param event the ActionEvent triggered when the Help button is clicked
+     */
 
     @FXML
     public void handleHelp(ActionEvent event) {
