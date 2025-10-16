@@ -222,7 +222,12 @@ public class SudokuGameController implements Initializable {
             }
         }
     }
+
+    /**
+     * Shows victory alert and closes the game.
+     */
     public void showVictoryAlert(){
         new AlertBox().showAlert("¡Felicidades!","¡Has completado el Sudoku!",Alert.AlertType.INFORMATION);
+        com.example.demosudoku.view.SudokuGameStage.deleteInstance();
     }
 }
