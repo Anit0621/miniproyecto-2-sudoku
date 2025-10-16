@@ -96,6 +96,14 @@ public class Game extends GameAbstract {
                         if (controller != null) {
                             controller.addMessage(message);
                         }
+
+                        if (board.isComplete()){
+                            if (controller != null){
+                                controller.addMessage("¡Felicidades! Has completado el Sudoku.");
+                                controller.showVictoryAlert();
+                            }
+                        }
+
                     } else {
                         String message = "✗ Numero " + number + " INVALIDO en la posicion.";
                         if (controller != null) {
